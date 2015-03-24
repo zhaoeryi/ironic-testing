@@ -8,7 +8,7 @@ class ConfigOpts(object):
     
     def setup(self):
         base_dir =  os.path.dirname(os.path.abspath(__file__))
-        conf_file = os.path.join(base_dir, "systest.conf")
+        conf_file = os.path.join(base_dir, "config.conf")
             
         cp = ConfigParser.RawConfigParser()
         cp.read(conf_file)
