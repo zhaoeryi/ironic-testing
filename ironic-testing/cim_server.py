@@ -339,12 +339,17 @@ class FanInformation(object):
 class PowerSupplyInformation(object):
     status = None  # Normal
     rated_power = None  # 550
+    fru_name = None # Power Supply 1
+    part_number = None
     fru_number = None  # 94Y8110
+    serial_number = None
+    manufacturer = None
     power_on_duration = None  # 6,958 hour(s)
     power_cycles = None  # 46
     errors = None  # 0    
     health_state = None
-    physical_package = None
+    
+    
        
 class ServerCimConnector(object):
 
@@ -575,6 +580,7 @@ class ServerCimConnector(object):
                 powerInfo = PowerSupplyInformation()
                 result.append(powerInfo)
                 
+                powerInfo.fru_name = ps['ElementName']
                 powerInfo.health_state = const_powersupply_healthstate_dict[ps['HealthState']]
                 
                 status_list = ps['OperationalStatus']
@@ -585,7 +591,11 @@ class ServerCimConnector(object):
                 
                 powerInfo.rated_power = ps['TotalOutputPower'] / 1000
                 
-                powerInfo.physical_package = self.get_physical_package(ps.path)
+                pkg = self.get_physical_package(ps.path)
+                if pkg is not None:
+                    powerInfo.manufacturer = pkg.manufacturer
+                    powerInfo.part_number = pkg.part_number
+                    powerInfo.serial_number = pkg.serial_number
         
         return result     
                 
