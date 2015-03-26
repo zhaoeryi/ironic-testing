@@ -32,6 +32,10 @@ class BaseTestCase(unittest.TestCase):
         end = time.time()
         msg = ('[Test Case] end, taking %s seconds.' % ("%.1f" % (end - self.start)))
         print(msg)
-
+    
+    def dump(self, obj):
+        for attr in dir(obj):
+            print ('obj.%s = %s' % (attr, getattr(obj, attr)))
+    
 def main():
     unittest.main()
